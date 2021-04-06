@@ -1,8 +1,17 @@
 import React from "react";
+import Background from "./components/background";
+import Navigation from "./navigation";
+import GlobalStyle from "./styles";
 
 const App = () => {
   return (
-    <div>Hello world</div>
+    <React.Fragment>
+      <GlobalStyle />
+      <Navigation />
+      <Background>
+        Hello
+      </Background>
+    </React.Fragment>
   );
 }
 
