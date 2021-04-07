@@ -53,7 +53,7 @@ const ProfilePage = () => {
     //States
     const [loadingCoin, setLoadingCoins] = React.useState(true);
     const [currentCoin, setCurrentCoin] = React.useState("ETH");
-    const [currentQuote, setCurrentQuote] = React.useState("USDT");
+    const [currentQuote, setCurrentQuote] = React.useState("BTC");
     const [preferences, setPreferences] = React.useState([]);
 
     const [coinData, setCoinData] = React.useState({});
@@ -150,30 +150,33 @@ const ProfilePage = () => {
                             <Grid item xs={4}>
                                 <Card classes={{ root: classes.card }}>
                                     <MyTypograhpy variant="h5" component="h5">Preferences</MyTypograhpy>
-                                    <List>
                                     {
-                                        preferences.map((coin, index) => {
-                                            return ( 
-                                                <ListItem button key={index}>
-                                                    <ListItemAvatar>
-                                                        <Avatar>
-                                                            <MonetizationOn />
-                                                        </Avatar>
-                                                    </ListItemAvatar>
-                                                    <ListItemText>{ coin }</ListItemText>
-                                                    <ListItemSecondaryAction>
-                                                        <IconButton 
-                                                            edge="end" 
-                                                            aria-label="delete"
-                                                            onClick={() => onRemoveButtonClicked(coin)}>
-                                                        <Delete />
-                                                        </IconButton>
-                                                    </ListItemSecondaryAction>
-                                                </ListItem>
-                                            );
-                                        })
+                                        preferences.length > 0 ?
+                                        <List>
+                                        {
+                                            preferences.map((coin, index) => {
+                                                return ( 
+                                                    <ListItem button key={index}>
+                                                        <ListItemAvatar>
+                                                            <Avatar>
+                                                                <MonetizationOn />
+                                                            </Avatar>
+                                                        </ListItemAvatar>
+                                                        <ListItemText>{ coin }</ListItemText>
+                                                        <ListItemSecondaryAction>
+                                                            <IconButton 
+                                                                edge="end" 
+                                                                aria-label="delete"
+                                                                onClick={() => onRemoveButtonClicked(coin)}>
+                                                            <Delete />
+                                                            </IconButton>
+                                                        </ListItemSecondaryAction>
+                                                    </ListItem>
+                                                );
+                                            })
+                                        }
+                                        </List> : <MyTypograhpy>No coin added yet</MyTypograhpy>
                                     }
-                                    </List>
                                 </Card>
                                 <Card classes={{ root: classes.card }}>
                                     <MarginBottomSmall>
