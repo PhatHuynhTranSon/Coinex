@@ -41,9 +41,14 @@ const OneCoinPage = () => {
         setCoinNames(coins);
         setCoinsWithQuote(data);
         setLoadingMessage(null);
+        initialize();
     }, []);
 
     React.useEffect(async () => {
+        initialize();
+    }, [currentCoin, interval]);
+
+    const initialize = async () => {
         //Prepare parameters
         if (currentCoin && coinsWithQuote.current) {
             //Set loading
@@ -62,7 +67,7 @@ const OneCoinPage = () => {
             //Set not loading
             setLoadingMessage(null);
         }
-    }, [currentCoin, interval]);
+    }
 
     //Handle user input
     const onCoinNameChanged = (event, newValue) => {
@@ -71,7 +76,7 @@ const OneCoinPage = () => {
 
     const onIntervalChanged = (event) => {
         setInterval(event.target.value);
-    }   
+    }
 
     return (
         <>

@@ -36,14 +36,24 @@ const AllCoinsPage = () => {
         setQuote(event.target.value);
     };
 
+    const onPageChanged = (event, newValue) => {
+        setCurrentPage(newValue);
+    }
+
     React.useEffect(async () => {
         setLoadingMessage("Loading coins")
         const data = await getCoinsWithQuote();
         setCoinsWithQuotes(data);
         setLoadingMessage(null);
+        initialize();
     }, []);
 
     React.useEffect(async() => {
+        //On quote changed -> Retrieve the coins
+        initialize();
+    }, [quote, currentPage]);
+
+    const initialize = async () => {
         //On quote changed -> Retrieve the coins
         if (coinsWithQuotes.current) {
             //Get the symbols
@@ -63,7 +73,7 @@ const AllCoinsPage = () => {
             setPriceLoading(false);
             setCoinData(priceData);
         }
-    }, [quote]);
+    }
 
     return (
         <>
@@ -94,8 +104,8 @@ const AllCoinsPage = () => {
                             .keys(coinData)
                             .map((key, index) => {
                                 return (
-                                    <Grid item xs={4}>
-                                        <CandleStickChart data={coinData[key]} title={key} key={index}/>
+                                    <Grid item xs={4} key={index}>
+                                        <CandleStickChart data={coinData[key]} title={key}/>
                                     </Grid>
                                 )
                             })
@@ -104,7 +114,9 @@ const AllCoinsPage = () => {
                     }
                     </MarginBottomLarge>
 
-                    <Pagination count={10}/>
+                    <Pagination 
+                        count={totalPages}
+                        onChange={onPageChanged}/>
                 </>
             }
         </>
