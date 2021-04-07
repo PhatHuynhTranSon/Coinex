@@ -75,3 +75,8 @@ export const getAllCoins = async () => {
         "coins_with_quote": coinsWithQuote
     }
 }   
+
+export const getCoinsWithQuote = async () => {
+    const quotesWithCoins = await new CoinRest().get(new QuoteBaseParser());
+    return quotesWithCoins;
+}

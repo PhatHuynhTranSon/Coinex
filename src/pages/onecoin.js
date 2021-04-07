@@ -1,5 +1,5 @@
 import { Autocomplete } from "@material-ui/lab";
-import { makeStyles, MenuItem, Select, TextField } from "@material-ui/core";
+import { Grid, makeStyles, MenuItem, Select, TextField } from "@material-ui/core";
 import React from "react"
 import { getAllCoins } from "../api/coins";
 import MyTypography from "../components/typography";
@@ -112,17 +112,19 @@ const OneCoinPage = () => {
                         loadingMessage ?
                         null :
                         <MarginBottomLarge>
-                        {
-                            Object
-                                .keys(coinData)
-                                .map((key, index) => {
-                                    return (
-                                        <MarginBottomSmall>
-                                            <CandleStickChart data={coinData[key]} title={key} key={index}/>
-                                        </MarginBottomSmall>
-                                    )
-                                })
-                        }
+                            <Grid container>
+                            {
+                                Object
+                                    .keys(coinData)
+                                    .map((key, index) => {
+                                        return (
+                                            <Grid item xs={4}>
+                                                <CandleStickChart data={coinData[key]} title={key} key={index}/>
+                                            </Grid>
+                                        )
+                                    })
+                            }
+                            </Grid>
                         </MarginBottomLarge>
                     }
                 </>

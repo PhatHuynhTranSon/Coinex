@@ -27,17 +27,15 @@ const CandleStickChart = ({ title, data, key }) => {
         //Create series and set data
         const candlestickSeries = chart.addCandlestickSeries();
         candlestickSeries.setData(data);
-    });
 
-    //On umount
-    /*
-    React.useEffect(() => {
-        if (chartRef.current) {
-            chartRef.current.remove();
-            chartRef.current = null;
+        //On unmount -> Clean up
+        return () => {
+            if (chartRef.current) {
+                chartRef.current.remove();
+                chartRef.current = null;
+            }
         }
-    }, []);
-    */
+    });
 
     //Render
     return (

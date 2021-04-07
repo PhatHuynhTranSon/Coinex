@@ -3,6 +3,7 @@ import AppsIcon from '@material-ui/icons/Apps';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Logo from "./logo";
+import { Link } from "react-router-dom";
 
 
 const useStyles = makeStyles({
@@ -23,15 +24,15 @@ const Navigation = () => {
             <Logo>Coinex</Logo>
             <Divider />
             <List>
-                <ListItem button>
+                <ListItem button component={Link} to="/">
                     <ListItemIcon><MonetizationOnIcon/></ListItemIcon>
                     <ListItemText>One coin</ListItemText>
                 </ListItem>
-                <ListItem button>
+                <ListItem button component={Link} to="/all">
                     <ListItemIcon><AppsIcon/></ListItemIcon>
                     <ListItemText>All coins</ListItemText>
                 </ListItem>
-                <ListItem button>
+                <ListItem button component={Link} to="/profile">
                     <ListItemIcon><AccountCircleIcon/></ListItemIcon>
                     <ListItemText>Profile</ListItemText>
                 </ListItem>
