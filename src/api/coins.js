@@ -40,12 +40,13 @@ class QuoteBaseParser {
 
     parse(data) {
         const { symbols } = data;
-        const parsedData = { "BTC": [], "ETH": [] };
+        const quotes = ["BTC", "ETH", "USDT"];
+        const parsedData = { "BTC": [], "ETH": [], "USDT": [] };
 
         for (const symbol of symbols) {
             const { quote, base } = this.parseDatum(symbol);
 
-            if (quote === "BTC" || quote === "ETH") {
+            if (quotes.includes(quote)) {
                 parsedData[quote].push(base);
             }
         }

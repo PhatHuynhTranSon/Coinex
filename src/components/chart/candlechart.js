@@ -1,53 +1,29 @@
-import React from "react";
-import { createChart } from "lightweight-charts";
-import MyTypograhpy from "../typography";
-import styled from "styled-components";
-import { MarginBottomSmall } from "../spacing";
+import { HighPrecisionChart, LowPrecisionChart }from "./basechart";
 
-const Wrapper = styled.div`
-    width: 100%;
-`
+const assignPrecision = (title) => {
+    const postfix = title.substring(title.length - 3, title.length);
 
-const CandleStickChart = ({ title, data, key }) => {
-    //Reference
-    const divRef = React.useRef();
-    const wrapperRef = React.useRef();
-    const divId = "container-id-" + title;
-    const chartRef = React.useRef();
+    switch (postfix) {
+        case "ETH":
+        case "BTC":
+            return true;
+        case "USDT":
+            return false;
+        default:
+            return false;
+    }
+}
 
-    //On mount
-    React.useEffect(() => {
-        //Get width
-        const width = wrapperRef.current.offsetWidth;
+const CandleStickChart = ({ title, data }) => {
+    //Check the symbol
+    const isHighPrecision = assignPrecision(title);
 
-        //Create and save chart
-        const chart = createChart(divId, { width, height: 400 });
-        chartRef.current = chart;
-
-        //Create series and set data
-        const candlestickSeries = chart.addCandlestickSeries();
-        candlestickSeries.setData(data);
-
-        //On unmount -> Clean up
-        return () => {
-            if (chartRef.current) {
-                chartRef.current.remove();
-                chartRef.current = null;
-            }
-        }
-    });
-
-    //Render
-    return (
-        <Wrapper ref={wrapperRef}>
-            <MarginBottomSmall>
-                <MyTypograhpy variant="h5" component="h5">{ title }</MyTypograhpy>
-            </MarginBottomSmall>
-            <div 
-                ref={divRef}
-                id={divId}/>
-        </Wrapper>
-    )
+    //Draw chart
+    if (isHighPrecision) {
+        return <HighPrecisionChart title={title} data={data}/>
+    } else {
+        return <LowPrecisionChart title={title} data={data}/>
+    }
 }   
 
 export default CandleStickChart;

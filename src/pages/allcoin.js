@@ -19,8 +19,16 @@ const AllCoinsPage = () => {
         coinsWithQuotes.current = data;
     }
 
-    const getCoins = (quote) => {
-        const data = coinsWithQuotes.current[quote];
+    const getCoins = (quote, sorted) => {
+        let data;
+
+        if (sorted) {
+            data = [...coinsWithQuotes.current[quote]];
+            data = data.sort();
+        } else {
+            data = coinsWithQuotes.current[quote];
+        }
+
         return data.map(coin => coin + quote);
     }
 
@@ -31,6 +39,8 @@ const AllCoinsPage = () => {
     const [currentPage, setCurrentPage] = React.useState(1);
     const [totalPages, setTotalPages] = React.useState();
     const [coinData, setCoinData] = React.useState({});
+    const [interval, setInterval] = React.useState("1d");
+    const [sorted, setSorted] = React.useState(false);
 
     const onQuoteChanged = (event) => {
         setQuote(event.target.value);
@@ -38,6 +48,20 @@ const AllCoinsPage = () => {
 
     const onPageChanged = (event, newValue) => {
         setCurrentPage(newValue);
+    }
+    
+    const onIntervalChanged = (event) => {
+        setInterval(event.target.value);
+    }
+
+    const onSortedChanged = (event) => {
+        const value = event.target.value;
+
+        if (value === "None") {
+            setSorted(false);
+        } else {
+            setSorted(true);
+        }
     }
 
     React.useEffect(async () => {
@@ -51,13 +75,13 @@ const AllCoinsPage = () => {
     React.useEffect(async() => {
         //On quote changed -> Retrieve the coins
         initialize();
-    }, [quote, currentPage]);
+    }, [quote, interval, sorted, currentPage]);
 
     const initialize = async () => {
         //On quote changed -> Retrieve the coins
         if (coinsWithQuotes.current) {
             //Get the symbols
-            const symbols = getCoins(quote);
+            const symbols = getCoins(quote, sorted);
 
             //Set the total page
             const totalPages = Math.floor(symbols.length / COINS_PER_PAGE);
@@ -82,17 +106,51 @@ const AllCoinsPage = () => {
                 <LoadingScreen message={loadingMessage}/> :
                 <>
                     <MarginBottomLarge>
-                        <MarginBottomSmall>
-                            <MyTypograhpy variant="h4" component="h4">Choose variation</MyTypograhpy>
-                        </MarginBottomSmall>
+                        <Grid container>
+                            <Grid item xs={4}>
+                                <MarginBottomSmall>
+                                    <MyTypograhpy variant="h4" component="h4">Choose variation</MyTypograhpy>
+                                </MarginBottomSmall>
 
-                        <Select
-                            value={quote}
-                            onChange={onQuoteChanged}>
-                            <MenuItem value="BTC">BTC</MenuItem>
-                            <MenuItem value="ETH">ETH</MenuItem>
-                        </Select>
+                                <Select
+                                    value={quote}
+                                    onChange={onQuoteChanged}>
+                                    <MenuItem value="BTC">BTC</MenuItem>
+                                    <MenuItem value="ETH">ETH</MenuItem>
+                                    <MenuItem value="USDT">USDT</MenuItem>
+                                </Select>
+                            </Grid>
+
+                            <Grid item xs={4}>
+                                <MarginBottomSmall>
+                                    <MyTypograhpy variant="h4" component="h4">Choose interval</MyTypograhpy>
+                                </MarginBottomSmall>
+
+                                <Select
+                                    value={interval}
+                                    onChange={onIntervalChanged}>
+                                    <MenuItem value="1h">One hour</MenuItem>
+                                    <MenuItem value="4h">Four hours</MenuItem>
+                                    <MenuItem value="1d">One day</MenuItem>
+                                    <MenuItem value="1w">One week</MenuItem>
+                                </Select>
+                            </Grid>
+
+                            <Grid item xs={4}>
+                                <MarginBottomSmall>
+                                    <MyTypograhpy variant="h4" component="h4">Sort by</MyTypograhpy>
+                                </MarginBottomSmall>
+
+                                <Select
+                                    value={sorted ? "A-Z" : "None"}
+                                    onChange={onSortedChanged}>
+                                    <MenuItem value="None">None</MenuItem>
+                                    <MenuItem value="A-Z">A-Z</MenuItem>
+                                </Select>
+                            </Grid>
+                        </Grid>
                     </MarginBottomLarge>
+
 
                     <MarginBottomLarge>
                     {
