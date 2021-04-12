@@ -1,5 +1,5 @@
 import { Autocomplete } from "@material-ui/lab";
-import { Grid, makeStyles, MenuItem, Select, TextField } from "@material-ui/core";
+import { Grid, makeStyles, Menu, MenuItem, Select, TextField } from "@material-ui/core";
 import React from "react"
 import { getAllCoins } from "../api/coins";
 import MyTypography from "../components/typography";
@@ -108,6 +108,7 @@ const OneCoinPage = () => {
                             value={interval}
                             onChange={onIntervalChanged}>
                             <MenuItem value="1h">One hour</MenuItem>
+                            <MenuItem value="4h">Four hour</MenuItem>
                             <MenuItem value="1d">One day</MenuItem>
                             <MenuItem value="1w">One week</MenuItem>
                         </Select>
