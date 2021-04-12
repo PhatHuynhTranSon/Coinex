@@ -108,7 +108,7 @@ const OneCoinPage = () => {
                             value={interval}
                             onChange={onIntervalChanged}>
                             <MenuItem value="1h">One hour</MenuItem>
-                            <MenuItem value="4h">Four hour</MenuItem>
+                            <MenuItem value="4h">Four hours</MenuItem>
                             <MenuItem value="1d">One day</MenuItem>
                             <MenuItem value="1w">One week</MenuItem>
                         </Select>
