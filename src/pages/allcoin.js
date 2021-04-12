@@ -9,7 +9,7 @@ import { getOneCoinPrice } from "../api/prices";
 
 import CandleStickChart from "../components/chart/candlechart";
 
-const COINS_PER_PAGE = 10;
+const COINS_PER_PAGE = 60;
 
 const AllCoinsPage = () => {
     //References

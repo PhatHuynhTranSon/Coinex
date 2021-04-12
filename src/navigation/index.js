@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
     paper: {
-        width: "240px"
+        width: "160px"
     }
 });
 

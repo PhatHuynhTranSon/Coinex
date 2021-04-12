@@ -30,6 +30,13 @@ const BaseCandleStickChart = ({ title, data, high_precision }) => {
         );
         chartRef.current = chart;
 
+        //Apply options
+        chart.applyOptions({
+            timeScale: {
+                rightOffset: 5
+            }
+        })
+
         //Create series and set data
         const candlestickSeries = chart.addCandlestickSeries();
 

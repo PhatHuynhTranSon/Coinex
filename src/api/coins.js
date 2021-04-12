@@ -38,6 +38,10 @@ class QuoteBaseParser {
         };
     }
 
+    isLeverageCoin(coin) {
+        return coin.includes("UP") || coin.includes("DOWN");
+    }
+
     parse(data) {
         const { symbols } = data;
         const quotes = ["BTC", "ETH", "USDT"];
@@ -46,7 +50,8 @@ class QuoteBaseParser {
         for (const symbol of symbols) {
             const { quote, base } = this.parseDatum(symbol);
 
-            if (quotes.includes(quote)) {
+            //Remove leverage coin from data
+            if (!this.isLeverageCoin(base) && quotes.includes(quote)) {
                 parsedData[quote].push(base);
             }
         }
